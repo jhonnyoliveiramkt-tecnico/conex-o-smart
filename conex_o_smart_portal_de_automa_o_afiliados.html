@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conexão Smart | Guia Definitivo de Automação Residencial e Casa Inteligente</title>
+  <meta name="description" content="Aprenda a montar sua casa inteligente sem gastar fortunas. Análises técnicas, comparativos e produtos recomendados com Alexa e Google Home.">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Fonte Inter Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#f0f7ff',
+              100: '#e0effe',
+              500: '#0284c7',
+              600: '#0369a1',
+              700: '#075985',
+              900: '#0c4a6e',
+            },
+            amazon: {
+              DEFAULT: '#FF9900',
+              hover: '#E88B00',
+              dark: '#146eb4',
+              surface: '#232f3e'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Estilização suave para scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen flex flex-col">
+
+  <!-- BARRA DE CONFIGURAÇÃO DO AFILIADO (ADMIN HELPER) -->
+  <div class="bg-slate-900 text-slate-200 text-xs py-2 px-4 border-b border-slate-800">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-2">
+        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-emerald-950 text-emerald-400 border border-emerald-800">
+          <i data-lucide="shield-check" class="w-3.5 h-3.5 mr-1 inline"></i> Modo Afiliado Ativo
+        </span>
+        <span class="hidden sm:inline text-slate-400">Personalize sua tag Amazon para os botões do blog:</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <label for="affiliate-tag-input" class="font-medium text-slate-300">Sua Tag ID:</label>
+        <input 
+          type="text" 
+          id="affiliate-tag-input" 
+          placeholder="ex: conexaosmart-20" 
+          value="conexaosmart-20"
+          class="bg-slate-800 border border-slate-700 rounded px-2 py-1 text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-amazon w-36 text-xs transition"
+        >
+        <button 
+          id="btn-update-tag" 
+          class="bg-amazon text-slate-950 px-2.5 py-1 rounded font-bold hover:bg-amazon-hover transition text-xs flex items-center gap-1 shadow-sm"
+          title="Atualizar links de afiliados na página"
+        >
+          <i data-lucide="refresh-cw" class="w-3 h-3"></i> Aplicar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CABEÇALHO / NAVBAR -->
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-sm transition-all">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+      
+      <!-- LOGO -->
+      <a href="#" class="flex items-center gap-2 group flex-shrink-0">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-700 via-brand-600 to-sky-400 flex items-center justify-center text-white shadow-md shadow-brand-500/20 group-hover:scale-105 transition-transform">
+          <i data-lucide="cpu" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <span class="text-xl font-extrabold tracking-tight text-slate-900 block leading-none">
+            Conexão<span class="text-sky-600">Smart</span>
+          </span>
+          <span class="text-[10px] uppercase font-bold tracking-wider text-slate-400 block mt-0.5">Casa Inteligente Prática</span>
+        </div>
+      </a>
+
+      <!-- MENU PRINCIPAL (DESKTOP) -->
+      <nav class="hidden md:flex items-center space-x-1 lg:space-x-2 text-sm font-medium text-slate-600">
+        <a href="#iniciantes" class="px-3 py-2 rounded-lg hover:text-sky-600 hover:bg-slate-100 transition-colors">Iniciantes</a>
+        <a href="#comparativo" class="px-3 py-2 rounded-lg hover:text-sky-600 hover:bg-slate-100 transition-colors">Kits Básicos</a>
+        <a href="#reviews" class="px-3 py-2 rounded-lg hover:text-sky-600 hover:bg-slate-100 transition-colors">Reviews & Testes</a>
+        <a href="#faq" class="px-3 py-2 rounded-lg hover:text-sky-600 hover:bg-slate-100 transition-colors">Dúvidas Frequentes</a>
+      </nav>
+
+      <!-- BOTÃO DE DESTAQUE / BUSCA -->
+      <div class="flex items-center gap-3">
+        <a 
+          href="#comparativo" 
+          class="hidden sm:inline-flex items-center gap-2 px-4 py-2 text-xs uppercase font-bold tracking-wider rounded-lg bg-slate-900 text-white hover:bg-slate-800 transition shadow-sm"
+        >
+          <i data-lucide="zap" class="w-3.5 h-3.5 text-amber-400"></i>
+          Guia Menos de R$ 300
+        </a>
+        <button 
+          id="mobile-menu-btn" 
+          aria-label="Abrir menu"
+          class="md:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100 transition"
+        >
+          <i data-lucide="menu" class="w-6 h-6"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- MENU MOBILE RETRÁTIL -->
+    <div id="mobile-menu" class="hidden md:hidden border-t border-slate-200 bg-white px-4 pt-3 pb-5 space-y-2 text-base font-medium">
+      <a href="#iniciantes" class="block px-3 py-2 rounded-md hover:bg-slate-100 text-slate-700">Iniciantes</a>
+      <a href="#comparativo" class="block px-3 py-2 rounded-md hover:bg-slate-100 text-slate-700">Kits Básicos</a>
+      <a href="#reviews" class="block px-3 py-2 rounded-md hover:bg-slate-100 text-slate-700">Reviews & Testes</a>
+      <a href="#faq" class="block px-3 py-2 rounded-md hover:bg-slate-100 text-slate-700">Dúvidas Frequentes (Fio Neutro / Wi-Fi)</a>
+      <div class="pt-2">
+        <a href="#comparativo" class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-amazon text-slate-950 font-bold text-sm shadow">
+          Ver Kit de Entrada Recomendado
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-grow">
+    
+    <!-- BANNER AVISO DE TRANSPARÊNCIA (ALTA CONVERSÃO & CONFORMIDADE) -->
+    <div class="bg-amber-50/70 border-b border-amber-200/60 py-2 px-4 text-center text-xs text-amber-900 font-medium">
+      <p class="max-w-4xl mx-auto flex items-center justify-center gap-2 flex-wrap">
+        <i data-lucide="info" class="w-3.5 h-3.5 text-amber-600 flex-shrink-0"></i>
+        <span>Preços e disponibilidades sujeitos a alteração. Testes atualizados em 2026 com base em compatibilidade Alexa e Google Home.</span>
+      </p>
+    </div>
+
+    <!-- SEÇÃO HERO: ARTIGO PRINCIPAL FOCADO EM CONVERSÃO -->
+    <section id="iniciantes" class="py-12 md:py-20 bg-gradient-to-b from-white via-slate-50 to-slate-100 border-b border-slate-200">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          
+          <div class="lg:col-span-7 space-y-6">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide bg-sky-100 text-sky-800 border border-sky-200">
+              <i data-lucide="sparkles" class="w-3.5 h-3.5 text-sky-600"></i>
+              Guia Passo a Passo 2026
+            </div>
+            
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-950 tracking-tight leading-tight">
+              Como Montar Sua Primeira Casa Inteligente Gastando <span class="text-sky-600 underline decoration-sky-300 decoration-wavy decoration-2">Menos de R$ 300</span>
+            </h1>
+
+            <p class="text-base sm:text-lg text-slate-600 leading-relaxed font-normal">
+              Você não precisa refazer a fiação da casa nem gastar fortunas com instaladores. Com apenas <strong>3 dispositivos estratégicos plug-and-play</strong>, você já controla iluminação, aparelhos comuns e recebe comandos por voz sem complicação.
+            </p>
+
+            <!-- CHECKLIST DE BENEFÍCIOS -->
+            <ul class="space-y-2.5 text-sm sm:text-base text-slate-700">
+              <li class="flex items-center gap-3">
+                <div class="w-5 h-5 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center flex-shrink-0">
+                  <i data-lucide="check" class="w-3.5 h-3.5"></i>
+                </div>
+                <span><strong>Sem quebra-quebra:</strong> Instalação em tomadas convencionais em menos de 10 minutos.</span>
+              </li>
+              <li class="flex items-center gap-3">
+                <div class="w-5 h-5 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center flex-shrink-0">
+                  <i data-lucide="check" class="w-3.5 h-3.5"></i>
+                </div>
+                <span><strong>Compatível com Alexa e celular:</strong> Controle por voz ou rotinas automatizadas ao acordar.</span>
+              </li>
+              <li class="flex items-center gap-3">
+                <div class="w-5 h-5 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center flex-shrink-0">
+                  <i data-lucide="check" class="w-3.5 h-3.5"></i>
+                </div>
+                <span><strong>Economia de energia real:</strong> Monitore o consumo de eletrônicos ligados em modo stand-by.</span>
+              </li>
+            </ul>
+
+            <div class="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+              <a 
+                href="#comparativo" 
+                class="inline-flex justify-center items-center gap-2 px-6 py-3.5 rounded-xl bg-slate-900 text-white font-semibold text-sm hover:bg-slate-800 transition shadow-lg shadow-slate-900/10"
+              >
+                <span>Ver o Kit de Entrada Recomendado</span>
+                <i data-lucide="arrow-down" class="w-4 h-4 text-sky-400"></i>
+              </a>
+              <span class="text-xs text-slate-500 text-center sm:text-left flex items-center justify-center sm:justify-start gap-1">
+                <i data-lucide="clock" class="w-3.5 h-3.5"></i> Leitura rápida: 4 minutos
+              </span>
+            </div>
+          </div>
+
+          <!-- CARD VISUAL DO COMBO INICIANTE -->
+          <div class="lg:col-span-5">
+            <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-xl border border-slate-200/90 relative overflow-hidden">
+              <div class="absolute -top-12 -right-12 w-40 h-40 bg-sky-100 rounded-full blur-2xl pointer-events-none"></div>
+              
+              <div class="flex items-center justify-between border-b border-slate-100 pb-4 mb-5">
+                <div>
+                  <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Configuração Inicial</span>
+                  <h3 class="text-lg font-bold text-slate-900">Kit Essencial Recomendado</h3>
+                </div>
+                <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-2.5 py-1 rounded-full border border-emerald-200">Melhor Escolha</span>
+              </div>
+
+              <!-- ITENS DO COMBO -->
+              <div class="space-y-4 mb-6">
+                <div class="flex items-center gap-3 p-3 rounded-xl bg-slate-50 border border-slate-100">
+                  <div class="w-10 h-10 rounded-lg bg-sky-500/10 text-sky-600 flex items-center justify-center font-bold text-sm">1</div>
+                  <div class="flex-grow">
+                    <h4 class="text-sm font-semibold text-slate-900">Echo Pop (Alexa Oficial)</h4>
+                    <p class="text-xs text-slate-500">Cérebro da automação + áudio compacto</p>
+                  </div>
+                  <span class="text-xs font-bold text-slate-700">~R$ 215</span>
+                </div>
+
+                <div class="flex items-center gap-3 p-3 rounded-xl bg-slate-50 border border-slate-100">
+                  <div class="w-10 h-10 rounded-lg bg-sky-500/10 text-sky-600 flex items-center justify-center font-bold text-sm">2</div>
+                  <div class="flex-grow">
+                    <h4 class="text-sm font-semibold text-slate-900">Lâmpada Inteligente Wi-Fi 9W</h4>
+                    <p class="text-xs text-slate-500">16 milhões de cores, bocal padrão E27</p>
+                  </div>
+                  <span class="text-xs font-bold text-slate-700">~R$ 38</span>
+                </div>
+
+                <div class="flex items-center gap-3 p-3 rounded-xl bg-slate-50 border border-slate-100">
+                  <div class="w-10 h-10 rounded-lg bg-sky-500/10 text-sky-600 flex items-center justify-center font-bold text-sm">3</div>
+                  <div class="flex-grow">
+                    <h4 class="text-sm font-semibold text-slate-900">Tomada Inteligente 10A/16A</h4>
+                    <p class="text-xs text-slate-500">Liga ventilador, cafeteira e monitora watts</p>
+                  </div>
+                  <span class="text-xs font-bold text-slate-700">~R$ 45</span>
+                </div>
+              </div>
+
+              <div class="bg-amber-50 rounded-xl p-4 border border-amber-200 mb-6 flex items-center justify-between">
+                <div>
+                  <span class="text-xs text-amber-800 font-medium block">Total estimado do investimento:</span>
+                  <span class="text-2xl font-black text-slate-900">R$ 298<span class="text-sm font-normal text-slate-600">,00</span></span>
+                </div>
+                <div class="text-right">
+                  <span class="text-[11px] text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 inline-block">Frete Grátis com Prime</span>
+                </div>
+              </div>
+
+              <!-- BOTÃO DE AFILIADO PRINCIPAL -->
+              <a 
+                href="https://www.amazon.com.br/s?k=echo+pop+lampada+inteligente+tomada+smart&tag=conexaosmart-20" 
+                target="_blank" 
+                rel="noopener noreferrer nofollow"
+                class="amazon-affiliate-link w-full py-3.5 px-4 rounded-xl bg-amazon hover:bg-amazon-hover text-slate-950 font-bold text-sm flex items-center justify-center gap-2 shadow-md transition transform active:scale-95"
+              >
+                <i data-lucide="shopping-cart" class="w-4 h-4"></i>
+                <span>Ver Pacote Completo na Amazon</span>
+                <i data-lucide="external-link" class="w-3.5 h-3.5 opacity-70"></i>
+              </a>
+              <span class="block text-center text-[11px] text-slate-400 mt-2">Você será redirecionado para a página oficial da Amazon Brasil</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SEÇÃO TABELA COMPARATIVA DE ENTRADA -->
+    <section id="comparativo" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <span class="text-xs font-bold tracking-wider uppercase text-sky-600 bg-sky-50 px-3 py-1 rounded-full border border-sky-200">
+          Tabela Comparativa Direta
+        </span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-3">Qual Dispositivo de Entrada Vale Mais a Pena?</h2>
+        <p class="text-sm sm:text-base text-slate-600 mt-2">
+          Compare as opções antes de investir. Veja o que cada modelo exige em termos de fiação elétrica e conectividade.
+        </p>
+      </div>
+
+      <div class="overflow-x-auto bg-white rounded-2xl shadow-sm border border-slate-200">
+        <table class="w-full text-left text-sm border-collapse min-w-[700px]">
+          <thead>
+            <tr class="bg-slate-100 text-slate-700 text-xs uppercase font-bold tracking-wider border-b border-slate-200">
+              <th class="py-4 px-6">Dispositivo</th>
+              <th class="py-4 px-4">Instalação Elétrica</th>
+              <th class="py-4 px-4">Precisa de Hub?</th>
+              <th class="py-4 px-4">Prós / Contras</th>
+              <th class="py-4 px-4">Faixa de Preço</th>
+              <th class="py-4 px-6 text-right">Ação</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 text-slate-600">
+            
+            <!-- LINHA 1: ECHO POP -->
+            <tr class="hover:bg-slate-50/80 transition-colors">
+              <td class="py-4 px-6">
+                <div class="font-bold text-slate-900 flex items-center gap-2">
+                  <div class="w-8 h-8 rounded-lg bg-sky-100 text-sky-700 flex items-center justify-center font-bold text-xs">
+                    <i data-lucide="mic" class="w-4 h-4"></i>
+                  </div>
+                  <div>
+                    Echo Pop (Alexa)
+                    <span class="block text-xs font-normal text-slate-500">Caixa de som smart</span>
+                  </div>
+                </div>
+              </td>
+              <td class="py-4 px-4 font-medium text-slate-700">Tomada comum (Bivolt)</td>
+              <td class="py-4 px-4"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-emerald-100 text-emerald-800">Não (Wi-Fi direto)</span></td>
+              <td class="py-4 px-4 text-xs leading-relaxed">
+                <span class="text-emerald-700 font-medium">+ Microfone sensível e som encorpado</span><br>
+                <span class="text-rose-600 font-medium">- Não tem display de relógio</span>
+              </td>
+              <td class="py-4 px-4 font-bold text-slate-900">R$ 199 - R$ 230</td>
+              <td class="py-4 px-6 text-right">
+                <a 
+                  href="https://www.amazon.com.br/dp/B09ZX55B1H?tag=conexaosmart-20" 
+                  target="_blank" 
+                  rel="noopener noreferrer nofollow"
+                  class="amazon-affiliate-link inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amazon hover:bg-amazon-hover text-slate-950 font-bold text-xs shadow-sm transition"
+                >
+                  <span>Ver Oferta</span>
+                  <i data-lucide="external-link" class="w-3 h-3"></i>
+                </a>
+              </td>
+            </tr>
+
+            <!-- LINHA 2: LÂMPADA SMART WI-FI -->
+            <tr class="hover:bg-slate-50/80 transition-colors">
+              <td class="py-4 px-6">
+                <div class="font-bold text-slate-900 flex items-center gap-2">
+                  <div class="w-8 h-8 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center font-bold text-xs">
+                    <i data-lucide="lightbulb" class="w-4 h-4"></i>
+                  </div>
+                  <div>
+                    Lâmpada Wi-Fi 9W/10W
+                    <span class="block text-xs font-normal text-slate-500">Positivo / Elgin / Ekaza</span>
+                  </div>
+                </div>
+              </td>
+              <td class="py-4 px-4 font-medium text-slate-700">Rosquear no bocal E27</td>
+              <td class="py-4 px-4"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-emerald-100 text-emerald-800">Não (Wi-Fi 2.4GHz)</span></td>
+              <td class="py-4 px-4 text-xs leading-relaxed">
+                <span class="text-emerald-700 font-medium">+ Muda cor e programa rotinas</span><br>
+                <span class="text-rose-600 font-medium">- Interruptor físico da parede deve ficar ligado</span>
+              </td>
+              <td class="py-4 px-4 font-bold text-slate-900">R$ 35 - R$ 55</td>
+              <td class="py-4 px-6 text-right">
+                <a 
+                  href="https://www.amazon.com.br/s?k=lampada+inteligente+alexa&tag=conexaosmart-20" 
+                  target="_blank" 
+                  rel="noopener noreferrer nofollow"
+                  class="amazon-affiliate-link inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amazon hover:bg-amazon-hover text-slate-950 font-bold text-xs shadow-sm transition"
+                >
+                  <span>Ver Oferta</span>
+                  <i data-lucide="external-link" class="w-3 h-3"></i>
+                </a>
+              </td>
+            </tr>
+
+            <!-- LINHA 3: PLUG SMART -->
+            <tr class="hover:bg-slate-50/80 transition-colors">
+              <td class="py-4 px-6">
+                <div class="font-bold text-slate-900 flex items-center gap-2">
+                  <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-xs">
+                    <i data-lucide="plug-zap" class="w-4 h-4"></i>
+                  </div>
+                  <div>
+                    Plug Tomada 10A/16A
+                    <span class="block text-xs font-normal text-slate-500">Controle de eletros</span>
+                  </div>
+                </div>
+              </td>
+              <td class="py-4 px-4 font-medium text-slate-700">Espetar na tomada física</td>
+              <td class="py-4 px-4"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-emerald-100 text-emerald-800">Não (Wi-Fi 2.4GHz)</span></td>
+              <td class="py-4 px-4 text-xs leading-relaxed">
+                <span class="text-emerald-700 font-medium">+ Desliga aparelhos à distância e mede consumo</span><br>
+                <span class="text-rose-600 font-medium">- Aparelhos com botão de toque exigem religamento manual</span>
+              </td>
+              <td class="py-4 px-4 font-bold text-slate-900">R$ 42 - R$ 65</td>
+              <td class="py-4 px-6 text-right">
+                <a 
+                  href="https://www.amazon.com.br/s?k=tomada+inteligente+alexa+10a+16a&tag=conexaosmart-20" 
+                  target="_blank" 
+                  rel="noopener noreferrer nofollow"
+                  class="amazon-affiliate-link inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amazon hover:bg-amazon-hover text-slate-950 font-bold text-xs shadow-sm transition"
+                >
+                  <span>Ver Oferta</span>
+                  <i data-lucide="external-link" class="w-3 h-3"></i>
+                </a>
+              </td>
+            </tr>
+
+            <!-- LINHA 4: INTERRUPTOR SEM NEUTRO -->
+            <tr class="hover:bg-slate-50/80 transition-colors">
+              <td class="py-4 px-6">
+                <div class="font-bold text-slate-900 flex items-center gap-2">
+                  <div class="w-8 h-8 rounded-lg bg-purple-100 text-purple-700 flex items-center justify-center font-bold text-xs">
+                    <i data-lucide="toggle-right" class="w-4 h-4"></i>
+                  </div>
+                  <div>
+                    Interruptor Sem Neutro
+                    <span class="block text-xs font-normal text-slate-500">Touch para parede antiga</span>
+                  </div>
+                </div>
+              </td>
+              <td class="py-4 px-4 font-medium text-slate-700">Substitui interruptor na caixa 4x2</td>
+              <td class="py-4 px-4"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-sky-100 text-sky-800">Versões Wi-Fi ou Zigbee</span></td>
+              <td class="py-4 px-4 text-xs leading-relaxed">
+                <span class="text-emerald-700 font-medium">+ Mantém o controle manual sem desligar o smart</span><br>
+                <span class="text-rose-600 font-medium">- Exige desligar o disjuntor para instalar</span>
+              </td>
+              <td class="py-4 px-4 font-bold text-slate-900">R$ 65 - R$ 98</td>
+              <td class="py-4 px-6 text-right">
+                <a 
+                  href="https://www.amazon.com.br/s?k=interruptor+inteligente+sem+neutro+wifi&tag=conexaosmart-20" 
+                  target="_blank" 
+                  rel="noopener noreferrer nofollow"
+                  class="amazon-affiliate-link inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amazon hover:bg-amazon-hover text-slate-950 font-bold text-xs shadow-sm transition"
+                >
+                  <span>Ver Oferta</span>
+                  <i data-lucide="external-link" class="w-3 h-3"></i>
+                </a>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+      <p class="text-xs text-slate-500 mt-3 text-right">
+        *Valores consultados na Amazon Brasil e atualizados frequentemente.
+      </p>
+    </section>
+
+    <!-- SEÇÃO REVIEWS DE PRODUTOS INDIVIDUAIS COM FICHA TÉCNICA -->
+    <section id="reviews" class="py-16 bg-white border-t border-slate-200">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+          <div>
+            <span class="text-xs font-bold tracking-wider uppercase text-sky-600 bg-sky-50 px-3 py-1 rounded-full border border-sky-200">
+              Análises & Recomendações
+            </span>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-3">Os Melhores Modelos Testados para sua Casa</h2>
+            <p class="text-sm sm:text-base text-slate-600 mt-2">
+              Dispositivos com menor índice de desconexão e melhor suporte a redes brasileiras.
+            </p>
+          </div>
+          <div class="text-xs text-slate-500 flex items-center gap-2">
+            <i data-lucide="shield" class="w-4 h-4 text-emerald-600"></i>
+            Todos testados com o aplicativo Alexa & Tuya/Smart Life
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          
+          <!-- CARD 1: ECHO POP -->
+          <article class="bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden flex flex-col justify-between hover:shadow-lg transition-shadow">
+            <div class="p-6">
+              <!-- HEADER DO CARD -->
+              <div class="flex items-start justify-between gap-2 mb-3">
+                <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-sky-100 text-sky-800 border border-sky-200">Mais Vendido</span>
+                <div class="flex items-center text-amber-400 text-xs font-bold">
+                  <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                  <span class="ml-1 text-slate-700">4.8 / 5.0</span>
+                </div>
+              </div>
+
+              <h3 class="text-lg font-bold text-slate-900 hover:text-sky-600 transition">
+                Echo Pop | Smart Speaker com Alexa e Som Direcional
+              </h3>
+              <p class="text-xs text-slate-500 mt-1 mb-4">Ideal para quartos, escritórios e ambientes pequenos a médios.</p>
+
+              <!-- ESPECIFICAÇÕES TÉCNICAS RÁPIDAS -->
+              <div class="bg-white rounded-xl p-3 border border-slate-200/80 space-y-1.5 text-xs text-slate-600 mb-5">
+                <div class="flex justify-between">
+                  <span class="text-slate-400">Instalação:</span>
+                  <span class="font-medium text-slate-800">Plug & Play (Bivolt)</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-slate-400">Microfone:</span>
+                  <span class="font-medium text-slate-800">3 de longo alcance c/ botão mudo</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-slate-400">Conectividade:</span>
+                  <span class="font-medium text-slate-800">Wi-Fi Dual Band (2.4 e 5 GHz) + Bluetooth</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-slate-400">Áudio:</span>
+                  <span class="font-medium text-slate-800">Alto-falante de 1,95” frontal</span>
+                </div>
+              </div>
+
+              <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                <strong>Veredito:</strong> O melhor custo-benefício para quem quer entrar no ecossistema Alexa. O microfone reconhece a voz mesmo com música tocando e o design semi-esférico ocupa quase nenhum espaço no criado-mudo.
+              </p>
+            </div>
+
+            <div class="p-6 pt-0 border-t border-slate-100 bg-white/50 mt-auto">
+              <div class="flex items-center justify-between mb-3 pt-4">
+                <div>
+                  <span class="text-[10px] uppercase font-bold text-slate-400 block">Preço médio</span>
+                  <span class="text-xl font-extrabold text-slate-900">R$ 219,00</span>
+                </div>
+                <span class="text-xs font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">Até 3x sem juros</span>
+              </div>
+              <a 
+                href="https://www.amazon.com.br/dp/B09ZX55B1H?tag=conexaosmart-20" 
+                target="_blank" 
+                rel="noopener noreferrer nofollow"
+                class="amazon-affiliate-link w-full py-2.5 px-4 rounded-xl bg-amazon hover:bg-amazon-hover text-slate-950 font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition"
+              >
+                <i data-lucide="shopping-bag" class="w-3.5 h-3.5"></i>
+                <span>Ver Menor Preço na Amazon</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- CARD 2: TOMADA INTELIGENTE 16A COM MONITORAMENTO -->
+          <article class="bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden flex flex-col justify-between hover:shadow-lg transition-shadow">
+            <div class="p-6">
+              <div class="flex items-start justify-between gap-2 mb-3">
+                <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-emerald-100 text-emerald-800 border border-emerald-200">Alta Potência 16A</span>
+                <div class="flex items-center text-amber-400 text-xs font-bold">
+                  <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                  <span class="ml-1 text-slate-700">4.7 / 5.0</span>
+                </div>
+              </div>
+
+              <h3 class="text-lg font-bold text-slate-900 hover:text-sky-600 transition">
+                Plug Tomada Smart Wi-Fi 16A com Medidor de Consumo
+              </h3>
+              <p class="text-xs text-slate-500 mt-1 mb-4">Compatível com Air Fryer, cafeteiras, ar-condicionado portátil e PC.</p>
+
+              <!-- ESPECIFICAÇÕES TÉCNICAS RÁPIDAS -->
+              <div class="bg-white rounded-xl p-3 border border-slate-200/80 space-y-1.5 text-xs text-slate-600 mb-5">
+                <div class="flex justify-between">
+                  <span class="text-slate-400">Padrão do pino:</span>
+                  <span class="font-medium text-slate-800">Brasileiro (NBR 14136 - 3 pinos)</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-slate-400">Corrente Máx.:</span>
+                  <span class="font-medium text-emerald-700 font-bold">16A (Suporta aparelhos pesados)</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-slate-400">Aplicativo:</span>
+                  <span class="font-medium text-slate-800">Smart Life / Tuya / Alexa / Google</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-slate-400">Recurso Extra:</span>
+                  <span class="font-medium text-slate-800">Mede consumo em kWh no celular</span>
+                </div>
+              </div>
+
+              <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                <strong>Veredito:</strong> Diga adeus ao medo de deixar a prancha de cabelo ou ferro ligados. Este modelo de 16A suporta picos de corrente que queimariam tomadas comuns de 10A baratas.
+              </p>
+            </div>
+
+            <div class="p-6 pt-0 border-t border-slate-100 bg-white/50 mt-auto">
+              <div class="flex items-center justify-between mb-3 pt-4">
+                <div>
+                  <span class="text-[10px] uppercase font-bold text-slate-400 block">Preço médio</span>
+                  <span class="text-xl font-extrabold text-slate-900">R$ 49,90</span>
+                </div>
+                <span class="text-xs font-semibold text-sky-700 bg-sky-50 px-2 py-0.5 rounded border border-sky-200">Envio Imediato</span>
+              </div>
+              <a 
+                href="https://www.amazon.com.br/s?k=tomada+inteligente+16a+medidor+consumo&tag=conexaosmart-20" 
+                target="_blank" 
+                rel="noopener noreferrer nofollow"
+                class="amazon-affiliate-link w-full py-2.5 px-4 rounded-xl bg-amazon hover:bg-amazon-hover text-slate-950 font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition"
+              >
+                <i data-lucide="shopping-bag" class="w-3.5 h-3.5"></i>
+                <span>Ver Menor Preço na Amazon</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- CARD 3: INTERRUPTOR INTELIGENTE SEM FIO NEUTRO -->
+          <article class="bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden flex flex-col justify-between hover:shadow-lg transition-shadow">
+            <div class="p-6">
+              <div class="flex items-start justify-between gap-2 mb-3">
+                <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-purple-100 text-purple-800 border border-purple-200">Sem Neutro</span>
+                <div class="flex items-center text-amber-400 text-xs font-bold">
+                  <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                  <span class="ml-1 text-slate-700">4.6 / 5.0</span>
+                </div>
+              </div>
+
+              <h3 class="text-lg font-bold text-slate-900 hover:text-sky-600 transition">
+                Interruptor Touch Wi-Fi (Sem Fio Neutro) - Padrão 4x2
+              </h3>
+              <p class="text-xs text-slate-500 mt-1 mb-4">Perfeito para casas ou apartamentos antigos onde só desce a Fase.</p>
+
+              <!-- ESPECIFICAÇÕES TÉCNICAS RÁPIDAS -->
+              <div class="bg-white rounded-xl p-3 border border-slate-200/80 space-y-1.5 text-xs text-slate-600 mb-5">
+                <div class="flex justify-between">
+                  <span class="text-slate-400">Exige Neutro?</span>
+                  <span class="font-bold text-emerald-600">Não (Usa capacitor incluso)</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-slate-400">Acabamento:</span>
+                  <span class="font-medium text-slate-800">Vidro Temperado Touch Branco</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-slate-400">Rede:</span>
+                  <span class="font-medium text-slate-800">Wi-Fi 2.4 GHz</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-slate-400">Botões:</span>
+                  <span class="font-medium text-slate-800">Opções com 1, 2 ou 3 teclas</span>
+                </div>
+              </div>
+
+              <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                <strong>Veredito:</strong> Resolve o maior pesadelo dos brasileiros na automação: casas sem o fio neutro na caixinha de luz. Funciona com lâmpadas LED comuns sem ficar piscando.
+              </p>
+            </div>
+
+            <div class="p-6 pt-0 border-t border-slate-100 bg-white/50 mt-auto">
+              <div class="flex items-center justify-between mb-3 pt-4">
+                <div>
+                  <span class="text-[10px] uppercase font-bold text-slate-400 block">Preço médio</span>
+                  <span class="text-xl font-extrabold text-slate-900">R$ 68,00</span>
+                </div>
+                <span class="text-xs font-semibold text-purple-700 bg-purple-50 px-2 py-0.5 rounded border border-purple-200">Mais Solicitado</span>
+              </div>
+              <a 
+                href="https://www.amazon.com.br/s?k=interruptor+inteligente+sem+neutro+touch+4x2&tag=conexaosmart-20" 
+                target="_blank" 
+                rel="noopener noreferrer nofollow"
+                class="amazon-affiliate-link w-full py-2.5 px-4 rounded-xl bg-amazon hover:bg-amazon-hover text-slate-950 font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition"
+              >
+                <i data-lucide="shopping-bag" class="w-3.5 h-3.5"></i>
+                <span>Ver Menor Preço na Amazon</span>
+              </a>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SEÇÃO FAQ / DÚVIDAS DO INICIANTE (ACCORDION INTERATIVO) -->
+    <section id="faq" class="py-16 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-10">
+        <span class="text-xs font-bold tracking-wider uppercase text-sky-600 bg-sky-50 px-3 py-1 rounded-full border border-sky-200">
+          Tire Suas Dúvidas
+        </span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-3">Perguntas Frequentes do Iniciante</h2>
+        <p class="text-sm text-slate-600 mt-2">
+          Evite erros comuns antes de finalizar o pedido na Amazon.
+        </p>
+      </div>
+
+      <div class="space-y-4" id="faq-container">
+        
+        <!-- FAQ 1 -->
+        <div class="border border-slate-200 rounded-xl bg-white overflow-hidden transition-all shadow-sm">
+          <button class="faq-btn w-full p-4 sm:p-5 text-left font-bold text-slate-900 flex items-center justify-between gap-4 focus:outline-none hover:bg-slate-50">
+            <span class="text-sm sm:text-base">1. O que é o tal 'Fio Neutro' e por que todo mundo fala dele?</span>
+            <i data-lucide="chevron-down" class="faq-icon w-5 h-5 text-slate-400 transition-transform duration-200 flex-shrink-0"></i>
+          </button>
+          <div class="faq-content hidden px-4 sm:px-5 pb-5 text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+            Na maioria das construções antigas no Brasil, os interruptores cortam apenas o fio <strong>Fase</strong>. O fio <strong>Neutro</strong> fica direto no teto, junto ao bocal da lâmpada.<br><br>
+            Como os interruptores inteligentes comuns precisam ficar energizados 24 horas por dia para responder ao Wi-Fi, eles normalmente precisam do Neutro. Se a sua caixinha não tiver Neutro, você deve escolher especificamente modelos rotulados como <strong>'Sem Neutro'</strong> (que utilizam um pequeno capacitor instalado junto à lâmpada).
+          </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="border border-slate-200 rounded-xl bg-white overflow-hidden transition-all shadow-sm">
+          <button class="faq-btn w-full p-4 sm:p-5 text-left font-bold text-slate-900 flex items-center justify-between gap-4 focus:outline-none hover:bg-slate-50">
+            <span class="text-sm sm:text-base">2. Por que os aparelhos pedem Wi-Fi 2.4 GHz e recusam 5 GHz?</span>
+            <i data-lucide="chevron-down" class="faq-icon w-5 h-5 text-slate-400 transition-transform duration-200 flex-shrink-0"></i>
+          </button>
+          <div class="faq-content hidden px-4 sm:px-5 pb-5 text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+            A frequência de 2.4 GHz possui um alcance muito maior e ultrapassa paredes com muito mais facilidade do que o sinal de 5 GHz. Dispositivos inteligentes transmitem pouquíssimos dados (apenas comandos de 'ligar/desligar'), portanto priorizam o alcance e a estabilidade. Quase todos os roteadores atuais operam em modo dual-band automático (2.4 e 5 GHz juntos).
+          </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="border border-slate-200 rounded-xl bg-white overflow-hidden transition-all shadow-sm">
+          <button class="faq-btn w-full p-4 sm:p-5 text-left font-bold text-slate-900 flex items-center justify-between gap-4 focus:outline-none hover:bg-slate-50">
+            <span class="text-sm sm:text-base">3. Se a internet cair, a casa inteira para de funcionar?</span>
+            <i data-lucide="chevron-down" class="faq-icon w-5 h-5 text-slate-400 transition-transform duration-200 flex-shrink-0"></i>
+          </button>
+          <div class="faq-content hidden px-4 sm:px-5 pb-5 text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+            Não! Se a internet cair:
+            <ul class="list-disc pl-5 mt-2 space-y-1">
+              <li>Os interruptores continuam funcionando manualmente pelo toque na parede como qualquer interruptor normal.</li>
+              <li>As tomadas inteligentes mantêm o botão físico de ligar/desligar na lateral.</li>
+              <li>Apenas os comandos por voz (Alexa) e o acesso remoto fora de casa ficam temporariamente pausados até o sinal retornar.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="border border-slate-200 rounded-xl bg-white overflow-hidden transition-all shadow-sm">
+          <button class="faq-btn w-full p-4 sm:p-5 text-left font-bold text-slate-900 flex items-center justify-between gap-4 focus:outline-none hover:bg-slate-50">
+            <span class="text-sm sm:text-base">4. Preciso pagar alguma mensalidade para usar os aplicativos ou a Alexa?</span>
+            <i data-lucide="chevron-down" class="faq-icon w-5 h-5 text-slate-400 transition-transform duration-200 flex-shrink-0"></i>
+          </button>
+          <div class="faq-content hidden px-4 sm:px-5 pb-5 text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+            Absolutamente nenhuma. O uso dos aplicativos Smart Life, Tuya, e do próprio aplicativo Amazon Alexa para comandos, rotinas e automações é 100% gratuito. Você só paga pelo hardware físico na hora da compra.
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- BANNER DE CADASTRO / CHAMADA FINAL -->
+    <section class="py-12 bg-slate-900 text-white relative overflow-hidden">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 text-center space-y-5 relative z-10">
+        <h3 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Pronto para transformar sua rotina com comandos práticos?</h3>
+        <p class="text-slate-300 text-sm sm:text-base max-w-2xl mx-auto">
+          Aproveite as ofertas do dia na Amazon Brasil com frete grátis e entrega rápida para membros Amazon Prime.
+        </p>
+        <div class="pt-2">
+          <a 
+            href="https://www.amazon.com.br/b?node=19782928011&tag=conexaosmart-20" 
+            target="_blank" 
+            rel="noopener noreferrer nofollow"
+            class="amazon-affiliate-link inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-amazon hover:bg-amazon-hover text-slate-950 font-extrabold text-sm shadow-xl transition transform active:scale-95"
+          >
+            <i data-lucide="zap" class="w-4 h-4"></i>
+            <span>Explorar Todas as Ofertas de Casa Inteligente na Amazon</span>
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- RODAPÉ COMPLETO COM TERMOS E AVISO OBRIGATÓRIO DA AMAZON -->
+  <footer class="bg-slate-950 text-slate-400 text-xs border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+        
+        <div class="md:col-span-2 space-y-3">
+          <div class="flex items-center gap-2">
+            <div class="w-6 h-6 rounded-md bg-sky-600 flex items-center justify-center text-white">
+              <i data-lucide="cpu" class="w-3.5 h-3.5"></i>
+            </div>
+            <span class="text-sm font-bold text-white tracking-wide">Conexão Smart</span>
+          </div>
+          <p class="text-slate-400 text-xs leading-relaxed max-w-md">
+            Portal editorial independente dedicado a testes práticos, diagramas de instalação e comparativos de tecnologia para residências conectadas no Brasil.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="text-white font-semibold text-xs uppercase tracking-wider mb-3">Categorias</h4>
+          <ul class="space-y-2 text-xs">
+            <li><a href="#iniciantes" class="hover:text-white transition">Kits para Iniciantes</a></li>
+            <li><a href="#comparativo" class="hover:text-white transition">Comparativo de Iluminação</a></li>
+            <li><a href="#reviews" class="hover:text-white transition">Interruptores Sem Neutro</a></li>
+            <li><a href="#reviews" class="hover:text-white transition">Tomadas e Medição</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-white font-semibold text-xs uppercase tracking-wider mb-3">Legal & Transparência</h4>
+          <ul class="space-y-2 text-xs">
+            <li><a href="#" class="hover:text-white transition">Política de Privacidade</a></li>
+            <li><a href="#" class="hover:text-white transition">Termos de Uso</a></li>
+            <li><a href="#" class="hover:text-white transition">Divulgação de Afiliados</a></li>
+            <li><a href="#" class="hover:text-white transition">Contato Editorial</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- DECLARAÇÃO OBRIGATÓRIA DO PROGRAMA DE AFILIADOS DA AMAZON -->
+      <div class="border-t border-slate-900 pt-6 text-[11px] leading-relaxed text-slate-500 space-y-2">
+        <p class="bg-slate-900/60 p-3 rounded-lg border border-slate-800/80">
+          <strong>Declaração de Conformidade com o Programa de Associados:</strong> O portal <em>Conexão Smart</em> participa do <strong>Programa de Associados da Amazon Services LLC</strong>, um programa de publicidade de afiliados projetado para fornecer um meio para sites gerarem receitas por meio de anúncios e links para a Amazon.com.br. Ao comprar por meio de nossos links, podemos receber uma comissão qualificada sem que você pague nenhum centavo a mais pelo produto.
+        </p>
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-2 pt-2 text-slate-500">
+          <p>© 2026 Conexão Smart. Todos os direitos reservados.</p>
+          <p>Amazon e a logo da Amazon são marcas comerciais da Amazon.com, Inc. ou de suas afiliadas.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- NOTIFICAÇÃO FLUTUANTE (FEEDBACK AO ATUALIZAR TAG) -->
+  <div id="toast" class="fixed bottom-5 right-5 bg-slate-900 text-white border border-slate-700 px-4 py-3 rounded-xl shadow-2xl text-xs flex items-center gap-2 transform translate-y-24 opacity-0 transition-all duration-300 z-50">
+    <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>
+    <span id="toast-message">Links de afiliados atualizados com sucesso!</span>
+  </div>
+
+  <!-- SCRIPT LÓGICO DE INTERAÇÕES E MANIPULAÇÃO DA TAG DE AFILIADO -->
+  <script>
+    // Inicialização dos ícones Lucide
+    lucide.createIcons();
+
+    // Menu Mobile
+    const mobileBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    mobileBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    // Fechar menu mobile ao clicar em link
+    document.querySelectorAll('#mobile-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+      });
+    });
+
+    // Acordeão FAQ Interativo
+    const faqButtons = document.querySelectorAll('.faq-btn');
+
+    faqButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const content = button.nextElementSibling;
+        const icon = button.querySelector('.faq-icon');
+        const isOpen = !content.classList.contains('hidden');
+
+        // Fecha todos os outros para manter o layout limpo
+        document.querySelectorAll('.faq-content').forEach(c => c.classList.add('hidden'));
+        document.querySelectorAll('.faq-icon').forEach(i => i.classList.remove('rotate-180'));
+
+        if (!isOpen) {
+          content.classList.remove('hidden');
+          icon.classList.add('rotate-180');
+        }
+      });
+    });
+
+    // Sistema de Atualização Dinâmica da Tag de Afiliado da Amazon
+    const tagInput = document.getElementById('affiliate-tag-input');
+    const updateBtn = document.getElementById('btn-update-tag');
+    const affiliateLinks = document.querySelectorAll('.amazon-affiliate-link');
+    const toast = document.getElementById('toast');
+    const toastMessage = document.getElementById('toast-message');
+
+    function showToast(msg) {
+      toastMessage.innerText = msg;
+      toast.classList.remove('translate-y-24', 'opacity-0');
+      setTimeout(() => {
+        toast.classList.add('translate-y-24', 'opacity-0');
+      }, 3000);
+    }
+
+    function applyAffiliateTag() {
+      const newTag = tagInput.value.trim();
+      if (!newTag) {
+        showToast('Por favor, informe uma tag válida (ex: suatag-20).');
+        return;
+      }
+
+      let count = 0;
+      affiliateLinks.forEach(link => {
+        try {
+          const currentUrl = new URL(link.href);
+          currentUrl.searchParams.set('tag', newTag);
+          link.href = currentUrl.toString();
+          count++;
+        } catch (e) {
+          // Fallback caso a URL seja relativa
+          let href = link.getAttribute('href');
+          if (href.includes('tag=')) {
+            href = href.replace(/tag=[^&]+/, `tag=${newTag}`);
+          } else {
+            href += (href.includes('?') ? '&' : '?') + `tag=${newTag}`;
+          }
+          link.setAttribute('href', href);
+          count++;
+        }
+      });
+
+      // Salva no localStorage para persistir nos testes do usuário
+      localStorage.setItem('conexao_smart_tag', newTag);
+      showToast(`Tag "${newTag}" aplicada em todos os ${count} links!`);
+    }
+
+    // Carrega tag salva se houver
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedTag = localStorage.getItem('conexao_smart_tag');
+      if (savedTag) {
+        tagInput.value = savedTag;
+        applyAffiliateTag();
+      }
+    });
+
+    updateBtn.addEventListener('click', applyAffiliateTag);
+    tagInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        applyAffiliateTag();
+      }
+    });
+  </script>
+</body>
+</html>
